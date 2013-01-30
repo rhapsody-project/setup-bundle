@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<rhapsody:data
+  xmlns:rhapsody="http://github.com/rhapsody-project/RhapsodySetupBundle">
+  
+  <object id="mockperson-1" class="Rhapsody/SetupBundle/Test/Mocks/MockPerson">
+    <property name="name" value="John Smith" />
+    <property name="address" ref="mit-address" />
+  </object>
+  
+  <object id="mockperson-2" class="Rhapsody/SetupBundle/Test/Mocks/MockPerson">
+    <property name="name" value="Jane Smith" />
+    <property name="address">
+      <object ref="harvard-address" />
+    </property>
+  </object>
+  
+  <object id="mit-address" class="Rhapsody/SetupBundle/Test/Mocks/MockAddress">
+    <property name="address1" value="77 Massachusetts Ave." />
+    <property name="city" value="Cambridge" />
+    <property name="state" value="MA" />
+    <property name="zipCode" value="02139" />
+  </object>
+
+  <object id="harvard-address" class="Rhapsody/SetupBundle/Test/Mocks/MockAddress">
+    <property name="address1" value="Massachusetts Hall" />
+    <property name="city" value="Cambridge" />
+    <property name="state" value="MA" />
+    <property name="zipCode" value="02138" />
+  </object>
+  
+
+</rhapsody:data>
