@@ -1,0 +1,3 @@
+Rhapsody Setup Bundle for Symfony 2
+
+The Rhapsody Setup Bundle allows developers to populate data fronm XML, YML, CSV, or plain text files into the database of their choice that serves as the data source for their application. This allows developers to test an application within a development or sandbox environment with pre-populated data so that they can properly see and test their site's functionality to the fullest extent.  
