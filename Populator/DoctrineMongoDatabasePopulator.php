@@ -36,17 +36,18 @@ class DoctrineMongoDatabasePopulator extends DatabasePopulator
 			$this->getLog()->debug('Queue contains: '.$this->queue->count().' documents.');
 			foreach ($this->queue as $object) {
 				$name = $object->getName();
-				$document = $object->getInstance();
+				$_id = $object->getId();
 
-				$documentId = $document->getId();
-				if (empty($documentId)) {
+				if (empty($_id)) {
+					$document = $object->getInstance();
+
 					$this->getLog()->info('Saving document: '.$name.' ('.$document->__toString().')');
 					$documentManager->persist($document);
 					$documentManager->flush($document);
 
 					$documentId = $document->getId();
-					if (!empty($documentId)) {
-						$this->getLog()->info('Marking document document: '.get_class($document).' as persisted in cache with ID: '.$documentId);
+					if (!empty($name) && !empty($documentId)) {
+						$this->getLog()->info('Marking document: '.$name.' ('.get_class($document).') as persisted in cache with ID: '.$documentId);
 						$this->markAsPersisted($name, $documentId, $document);
 					}
 				}
