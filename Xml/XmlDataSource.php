@@ -1,20 +1,18 @@
 <?php
 namespace Rhapsody\SetupBundle\Xml;
 
-use Rhapsody\SetupBundle\Xml\Parser\QueryParser;
-
-use Rhapsody\SetupBundle\Model\Query;
-
 use Rhapsody\SetupBundle\Converter\ConverterFactory;
 use Rhapsody\SetupBundle\Model\Object;
 use Rhapsody\SetupBundle\Model\ObjectMetadata;
 use Rhapsody\SetupBundle\Model\Property;
 use Rhapsody\SetupBundle\Model\PropertyMetadata;
+use Rhapsody\SetupBundle\Model\Query;
 use Rhapsody\SetupBundle\Model\DataSource\AbstractDataSource;
 use Rhapsody\SetupBundle\Populator\IPopulator;
 use Rhapsody\SetupBundle\Xml\XmlElement;
 use Rhapsody\SetupBundle\Xml\Parser\ObjectMetadataParser;
 use Rhapsody\SetupBundle\Xml\Parser\PropertyMetadataParser;
+use Rhapsody\SetupBundle\Xml\Parser\QueryParser;
 
 /**
  * <p>
@@ -68,6 +66,9 @@ class XmlDataSource extends AbstractDataSource
 			return;
 		}
 		$this->xml = $this->parse();
+
+		$objects = $this->xml->getAll('object');
+		$this->getLog()->debug('Found '.count($objects).' objects in file.');
 
 		// ** Catalogue every object that has an id attribute.
 		$objects = $this->xml->getAll('object[@name]');
