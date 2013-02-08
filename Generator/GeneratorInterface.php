@@ -6,7 +6,7 @@ namespace Rhapsody\SetupBundle\Generator;
  * @author Sean.Quinn
  * @since 1.0
  */
-interface IGenerator
+interface GeneratorInterface
 {
 
 	function generate();
