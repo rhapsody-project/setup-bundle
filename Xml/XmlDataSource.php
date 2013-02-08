@@ -7,7 +7,7 @@ use Rhapsody\SetupBundle\Model\ObjectMetadata;
 use Rhapsody\SetupBundle\Model\Property;
 use Rhapsody\SetupBundle\Model\PropertyMetadata;
 use Rhapsody\SetupBundle\Model\Query;
-use Rhapsody\SetupBundle\Model\DataSource\AbstractDataSource;
+use Rhapsody\SetupBundle\Model\DataSource\FileDataSource;
 use Rhapsody\SetupBundle\Populator\IPopulator;
 use Rhapsody\SetupBundle\Xml\XmlElement;
 use Rhapsody\SetupBundle\Xml\Parser\ObjectMetadataParser;
@@ -25,7 +25,7 @@ use Rhapsody\SetupBundle\Xml\Parser\QueryParser;
  * @version   $Id$
  * @since     1.0
  */
-class XmlDataSource extends AbstractDataSource
+class XmlDataSource extends FileDataSource
 {
 
 	/**
@@ -46,9 +46,9 @@ class XmlDataSource extends AbstractDataSource
 	 * @param IPopulator $populator
 	 * @throws \Exception
 	 */
-	public function __construct($file, IPopulator $populator)
+	public function __construct($file = null)
 	{
-		parent::__construct($file, $populator);
+		parent::__construct($file);
 		$this->xml = null;
 	}
 

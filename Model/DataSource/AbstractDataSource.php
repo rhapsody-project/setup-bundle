@@ -23,13 +23,6 @@ abstract class AbstractDataSource implements IDataSource
 	private static $scalar = array('int', 'string', 'boolean');
 
 	/**
-	 * The file containing the data to be read, and transformed into objects,
-	 * by the populator.
-	 * @var string
-	 */
-	protected $file;
-
-	/**
 	 * An index of object identifiers, compiled at the time the data source is
 	 * prepared.
 	 * @var array
@@ -54,22 +47,6 @@ abstract class AbstractDataSource implements IDataSource
 	 * @access protected
 	 */
 	protected $prepared = false;
-
-	/**
-	 *
-	 * @param string $file
-	 * @param IPopulator $populator
-	 * @throws \Exception
-	 */
-	public function __construct($file, IPopulator $populator)
-	{
-		if (!is_file($file)) {
-			throw new \Exception('The file: '.$file.' is not a valid file.');
-		}
-		$this->file = $file;
-		$this->populator = $populator;
-		$this->log = new Logger(get_class($this));
-	}
 
 	/**
 	 * <p>
@@ -120,6 +97,11 @@ abstract class AbstractDataSource implements IDataSource
 		return $this->log;
 	}
 
+	public function getName()
+	{
+		return get_called_class();
+	}
+
 	protected function has($id)
 	{
 		return $this->populator->getCache()->has($id);
@@ -158,18 +140,6 @@ abstract class AbstractDataSource implements IDataSource
 	{
 		$this->getLog()->notice('Queuing object for persistence: '.$object->__toString());
 		$this->populator->getQueue()->add($object);
-	}
-
-	/**
-	 * <p>
-	 * Returns the source file for this <tt>DataSource</tt>.
-	 * </p>
-	 *
-	 * @return string the file name.
-	 */
-	public function getFile()
-	{
-		return $this->file;
 	}
 
 	/**
@@ -224,4 +194,13 @@ abstract class AbstractDataSource implements IDataSource
 	 *
 	 */
 	abstract protected function handle();
+
+	/**
+	 *
+	 * @param IPopulator $populator
+	 */
+	public function setPopulator(IPopulator $populator)
+	{
+		$this->populator = $populator;
+	}
 }

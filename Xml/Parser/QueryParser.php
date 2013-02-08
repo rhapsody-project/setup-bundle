@@ -49,7 +49,7 @@ class QueryParser extends Parser
 
 		$type = $xml->getAttribute('type');
 		if (empty($type)) {
-			throw new \InvalidArgumentException('Unable to perform query on unknown type.');
+			throw new \InvalidArgumentException('Unable to perform query: '.$statement.' on unknown type.');
 		}
 	}
 

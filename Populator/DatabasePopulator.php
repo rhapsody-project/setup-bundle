@@ -39,12 +39,13 @@ abstract class DatabasePopulator extends AbstractPopulator
 	 * @param ManagerRegistry $databaseManager
 	 * @param array $files
 	 */
-	public function __construct(ContainerInterface $container, ManagerRegistry $databaseManager, $files = array())
+	public function __construct(ContainerInterface $container, ManagerRegistry $databaseManager, array $dataSources = array(), array $files = array())
 	{
 		$this->cache = new DataObjectCache();
 		$this->queue = new DataObjectQueue();
 		$this->container = $container;
 		$this->databaseManager = $databaseManager;
+		$this->dataSources = $dataSources;
 		$this->files = $files;
 
 		$this->initialize();

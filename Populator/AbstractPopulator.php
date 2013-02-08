@@ -173,21 +173,21 @@ abstract class AbstractPopulator implements ContainerAwareInterface, IPopulator
 
 		foreach ($this->dataSources as $dataSource)
 		{
-			$file = $dataSource->getFile();
-			$this->getLog()->debug('Looking for: '.$id.' in data source: '.$file);
+			$dsn = $dataSource->getName();
+			$this->getLog()->debug('Looking for: '.$id.' in data source: '.$dsn);
 			if (!$dataSource->isPrepared()) {
 				$dataSource-prepare();
 			}
 
 			if ($dataSource->contains($id)) {
-				$this->getLog()->debug('Found object with ID: '.$id.' in data source: '.$file);
+				$this->getLog()->debug('Found object with ID: '.$id.' in data source: '.$dsn);
 				$object = $dataSource->findObject($id);
 				if ($object === null) {
 					// **
 					// We're not taking anything for granted, if the data source
 					// claims to have it, but we can't find it then we throw an
 					// exception because something is clearly not right here. [SWQ]
-					throw new \Exception('The data source: '.$dataSource->getFile()
+					throw new \Exception('The data source: '.$dsn
 							.' reported that it contained the object: '.$id
 							.' however the populator failed to read it.');
 				}
@@ -204,18 +204,24 @@ abstract class AbstractPopulator implements ContainerAwareInterface, IPopulator
 			throw new \NullPointerException('Service container is null; this populator requires access to the service container for logging');
 		}
 
-		$this->dataSources = array();
-		foreach ($this->files as $file) {
-			$this->getLog()->notice('Preparing data source: '.$file);
-			$dataSource = new XmlDataSource($file, $this);
-			$dataSource->prepare();
+		if (!is_array($this->dataSources)) {
+			$this->dataSources = array();
+		}
 
+		foreach ($this->files as $file) {
 			$this->getLog()->debug('Adding data source: '.$file.' to data sources');
+			$dataSource = new XmlDataSource($file);
 			array_push($this->dataSources, $dataSource);
 		}
 
 		foreach ($this->dataSources as $dataSource) {
-			$this->getLog()->notice('Processing data source: '.$dataSource->getFile());
+			$this->getLog()->notice('Preparing data source: '.$dataSource->getName());
+			$dataSource->setPopulator($this);
+			$dataSource->prepare();
+		}
+
+		foreach ($this->dataSources as $dataSource) {
+			$this->getLog()->notice('Processing data source: '.$dataSource->getName());
 			$dataSource->process();
 		}
 	}
@@ -227,6 +233,11 @@ abstract class AbstractPopulator implements ContainerAwareInterface, IPopulator
 	public function setContainer(ContainerInterface $container = null)
 	{
 		$this->container = $container;
+	}
+
+	public function setDataSources(array $dataSources = array())
+	{
+		$this->dataSources = $dataSources;
 	}
 
 	/**

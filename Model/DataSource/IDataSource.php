@@ -26,6 +26,8 @@ interface IDataSource
 	 */
 	public function findObject($id);
 
+	public function getName();
+
 	public function prepare();
 
 	/**
