@@ -14,7 +14,7 @@ use Symfony\Bridge\Monolog\Logger;
  * @version   $Id$
  * @since     1.0
  */
-class FileDataSource extends AbstractDataSource
+abstract class FileDataSource extends AbstractDataSource
 {
 	/**
 	 * The file containing the data to be read, and transformed into objects,
