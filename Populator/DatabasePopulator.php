@@ -51,6 +51,8 @@ abstract class DatabasePopulator extends AbstractPopulator
 		$this->initialize();
 	}
 
+	abstract protected function finalize();
+
 	public function getBatchSize()
 	{
 		return $this->batchSize;
@@ -64,6 +66,12 @@ abstract class DatabasePopulator extends AbstractPopulator
 	public function getDatabaseManager()
 	{
 		return $this->databaseManager;
+	}
+
+	public function run()
+	{
+		parent::run();
+		$this->finalize();
 	}
 
 	public function setBatchSize($batchSize)

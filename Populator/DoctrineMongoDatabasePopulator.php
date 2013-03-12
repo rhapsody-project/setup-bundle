@@ -1,9 +1,9 @@
 <?php
 namespace Rhapsody\SetupBundle\Populator;
 
-use Rhapsody\SetupBundle\Model\Query;
-
+use Application\LorecallBundle\Document\Item\Item;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Rhapsody\SetupBundle\Model\Query;
 use Rhapsody\SetupBundle\Populator\DatabasePopulator;
 
 /**
@@ -43,7 +43,7 @@ class DoctrineMongoDatabasePopulator extends DatabasePopulator
 
 					$this->getLog()->info('Saving document: '.$name.' ('.$document->__toString().')');
 					$documentManager->persist($document);
-					$documentManager->flush($document);
+					$documentManager->flush();
 
 					$documentId = $document->getId();
 					if (!empty($name) && !empty($documentId)) {
@@ -65,6 +65,13 @@ class DoctrineMongoDatabasePopulator extends DatabasePopulator
 	public function clean()
 	{
 		//$dm = $this->getDocumentManager();
+	}
+
+	protected function finalize()
+	{
+		$dm = $this->getDocumentManager();
+		//$dm->clear();
+		$dm->flush();
 	}
 
 	/**

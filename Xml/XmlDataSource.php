@@ -171,7 +171,7 @@ class XmlDataSource extends FileDataSource
 	 * @param XmlElement $element
 	 * @return \Rhapsody\SetupBundle\Data\DataObject the <tt>DataObject</tt>.
 	 */
-	public function parseObject($element)
+	public function parseObject($element, $persist = true)
 	{
 		// ** Assert that the $element is an instance of PHP's SimpleXMLElement...
 		if (!($element instanceof \SimpleXMLElement)) {
@@ -217,7 +217,7 @@ class XmlDataSource extends FileDataSource
 		}
 
 		// ** If the object is persistable, and it doesn't already have an object ID, queue it for persistence...
-		if ($object->isPersistable()) {
+		if ($object->isPersistable() && $persist === true) {
 			$id = $object->getId();
 			if (empty($id)) {
 				$this->queue($object);
@@ -332,7 +332,7 @@ class XmlDataSource extends FileDataSource
 				return $this->parseArray($firstChild);
 			}
 			if ($name == 'object') {
-				$object = $this->parseObject($firstChild);
+				$object = $this->parseObject($firstChild, false);
 				return $object !== null ? $object->getInstance() : null;
 			}
 		}
