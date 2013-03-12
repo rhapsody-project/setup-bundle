@@ -1,6 +1,7 @@
 <?php
 namespace Rhapsody\SetupBundle\Generator;
 
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Bridge\Monolog\Logger;
 
 /**
