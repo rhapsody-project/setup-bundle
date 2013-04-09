@@ -169,9 +169,9 @@ abstract class AbstractDataSource implements IDataSource
 		// ** Look for the object within other data sources.
 		$ref = $this->populator->lookup($name);
 		if ($ref === null) {
-			$this->getLog()->debug('Unable to find a object by reference: '.$ref.'. Please check your data sources. '
+			$this->getLog()->debug('Unable to find a object by reference: '.$name.'. Please check your data sources. '
 				.'If the object has already been persisted by another populator use the "query" attribute instead of "ref".');
-			throw new \NullPointerException('Unable to find reference: '.$ref.'. Does this object exist in your included data sources?');
+			throw new \NullPointerException('Unable to find reference: '.$name.'. Does this object exist in your included data sources?');
 		}
 		return $ref;
 	}
