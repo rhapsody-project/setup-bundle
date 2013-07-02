@@ -1,6 +1,8 @@
 <?php
 namespace Rhapsody\SetupBundle\Populator;
 
+use Doctrine\Common\Util\Debug;
+
 use Application\LorecallBundle\Document\Item\Item;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Rhapsody\SetupBundle\Model\Query;
@@ -42,6 +44,7 @@ class DoctrineMongoDatabasePopulator extends DatabasePopulator
 					$document = $object->getInstance();
 
 					$this->getLog()->info('Saving document: '.$name.' ('.$document->__toString().')');
+					//Debug::dump($document, 3);
 					$documentManager->persist($document);
 					$documentManager->flush();
 

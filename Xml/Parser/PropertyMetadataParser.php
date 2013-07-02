@@ -1,6 +1,7 @@
 <?php
 namespace Rhapsody\SetupBundle\Xml\Parser;
 
+use Rhapsody\SetupBundle\Model\Field;
 use Rhapsody\SetupBundle\Model\PropertyMetadata;
 use Rhapsody\SetupBundle\Xml\Parser\PropertyParser;
 use Rhapsody\SetupBundle\Xml\XmlElement;
@@ -61,6 +62,11 @@ class PropertyMetadataParser extends PropertyParser
 		$name = $this->getAttribute('name');
 		if (!empty($name)) {
 			$metadata->setName($name);
+		}
+
+		$field = $this->getAttribute('field');
+		if (!empty($field)) {
+			$metadata->setField(new Field($field));
 		}
 
 		$query = $this->getAttribute('query');

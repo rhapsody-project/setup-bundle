@@ -19,6 +19,13 @@ abstract class Generator implements GeneratorInterface
 {
 
 	/**
+	 * The character class.
+	 * @var string
+	 * @access protected
+	 */
+	protected $class;
+
+	/**
 	 * The document manager that can be used to retrieve repositories and
 	 * perform database operations.
 	 * @var Doctrine\Common\Persistence\ManagerRegistry
@@ -33,8 +40,9 @@ abstract class Generator implements GeneratorInterface
 	 */
 	protected $log = null;
 
-	public function __construct(ManagerRegistry $databaseManager)
+	public function __construct($class, ManagerRegistry $databaseManager)
 	{
+		$this->class = $class;
 		$this->databaseManager = $databaseManager;
 		$this->log = new Logger(get_class($this));
 		$this->__init();

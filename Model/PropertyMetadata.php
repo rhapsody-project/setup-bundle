@@ -12,6 +12,14 @@ namespace Rhapsody\SetupBundle\Model;
 class PropertyMetadata
 {
 	/**
+	 * For complex properties, the embedded field to evaluate as the value of
+	 * the property.
+	 * @var string
+	 * @access private
+	 */
+	private $_field;
+
+	/**
 	 * The name of the property.
 	 * @var string
 	 * @access private
@@ -52,6 +60,14 @@ class PropertyMetadata
 		return $className;
 	}
 
+	/**
+	 * @return string
+	 */
+	public function getField()
+	{
+		return $this->_field;
+	}
+
 	public function getName()
 	{
 		return $this->_name;
@@ -75,6 +91,21 @@ class PropertyMetadata
 	public function getType()
 	{
 		return $this->_type;
+	}
+
+	/**
+	 * Returns <tt>true</tt> when a <tt>field</tt> was specified on the
+	 * property. Otherwise, <tt>false</tt>.
+	 * @return boolean
+	 */
+	public function hasField()
+	{
+		return $this->_field !== null;
+	}
+
+	public function setField(FieldInterface $field)
+	{
+		$this->_field = $field;
 	}
 
 	public function setName($name)

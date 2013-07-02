@@ -282,6 +282,12 @@ class XmlDataSource extends FileDataSource
 		$ref = $metadata->getRef();
 		if (!empty($ref)) {
 			$value = $this->getReference($ref);
+			$instance = $value->getInstance();
+			if ($metadata->hasField()) {
+				$field = $metadata->getField();
+				$property = new Property($metadata, $field->resolve($instance));
+				return $property;
+			}
 			$property = new Property($metadata, $value->getInstance());
 			return $property;
 		}
