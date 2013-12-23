@@ -91,6 +91,11 @@ abstract class AbstractPopulator implements ContainerAwareInterface, IPopulator
 	 */
 	protected $queue;
 
+	public function addDataSource($dataSource)
+	{
+		$this->dataSources[] = $dataSource;
+	}
+
 	/**
 	 * (non-PHPdoc)
 	 * @see \Rhapsody\SetupBundle\Populator\IPopulator::getCache()
